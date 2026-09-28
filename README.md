@@ -43,6 +43,8 @@ This table will be updated as each week's material is released.
 | Week | Theory | Practical work | Materials |
 |---:|---|---|---|
 | 1 | Introduction to medical robotics | Environment setup and introduction to PyBullet | [Week 1](week-1/) |
+| 2 | Robot Kinematics | Compute Forward and Inverse Kinematics | [Week 2](week-2/) |
+
 
 ## Using this repository
 
