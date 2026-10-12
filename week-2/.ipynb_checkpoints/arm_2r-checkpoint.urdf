@@ -68,6 +68,20 @@
     </inertial>
   </link>
 
+ <!-- Arm: 0.8 m long, along +x of its own frame. -->
+  <link name="arm2_link">
+    <visual>
+      <origin xyz="0.3 0 0" rpy="0 1.5707963 0"/>
+      <geometry><cylinder radius="0.025" length="0.6"/></geometry>
+      <material name="yellow"><color rgba="1 1 0 1.0"/></material>
+    </visual>
+    <inertial>
+      <origin xyz="0.3 0 0" rpy="0 0 0"/>
+      <mass value="0.3"/>
+      <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
+    </inertial>
+  </link>
+
   <!-- Ball at the end of the arm. Its frame origin is exactly the arm tip. -->
   <link name="ball_link">
     <visual>
@@ -81,6 +95,19 @@
       <inertia ixx="0.005" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.005"/>
     </inertial>
   </link>
+
+    <link name="tip_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><sphere radius="0.04"/></geometry>
+        <material name="yellow"><color rgba="1 1 0 1"/></material>
+      </visual>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+      </inertial>
+    </link>
 
   <joint name="first_joint" type="fixed">
     <parent link="base_link"/>
@@ -97,6 +124,14 @@
     <dynamics damping="0.05" friction="0.0"/>
   </joint>
 
+    <joint name="elbow_joint" type="continuous">
+      <parent link="ball_link"/>
+      <child link="arm2_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 -1 0"/>
+      <dynamics damping="0.05" friction="0.0"/>
+    </joint>    
+
   <joint name="arm_fixed" type="fixed">
     <parent link="motor_link"/>
     <child link="arm_link"/>
@@ -109,30 +144,10 @@
     <origin xyz="0.8 0 0" rpy="0 0 0"/>
   </joint>
 
-
-  <!-- Arm: 0.6 m long, along +x of its own frame. -->
-  <link name="arm2_link">
-    <visual>
-      <origin xyz="0.3 0 0" rpy="0 1.5707963 0"/>
-      <geometry><cylinder radius="0.025" length="0.6"/></geometry>
-      <material name="yellow"><color rgba="1 1 0 1.0"/></material>
-    </visual>
-    <inertial>
-      <origin xyz="0.4 0 0" rpy="0 0 0"/>
-      <mass value="0.3"/>
-      <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
-    </inertial>
-  </link>
-
-
-    <joint name="elbow_joint" type="continuous">
-      <parent link="ball_link"/>
-      <child link="arm2_link"/>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <axis xyz="0 -1 0"/>
-      <dynamics damping="0.05" friction="0.0"/>
+    <joint name="tip_fixed" type="fixed">
+      <parent link="arm2_link"/>
+      <child link="tip_link"/>
+      <origin xyz="0.6 0 0" rpy="0 0 0"/>
     </joint>
-
-
 
 </robot>
