@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  S2RK surgical robot, serial model for the Robotica Medica lab (FCUL).
+
+  Source: robotrcm.urdf (SolidWorks export) from the HFUT Open Source Surgical Robot Research Kit,
+  S2RK_Software/S2RK_Simulation/RCM-Simulation/surr-robot/robotrcm/urdf, commit 3b0b801.
+  Licence of the original: CC BY-NC-SA 4.0 / PolyForm Noncommercial 1.0.0.
+
+  The real robot closes its parallelogram mechanically, which keeps the instrument through the
+  remote centre of motion (RCM). Here the loop is left open: j1..j6 are six independent joints, so
+  the RCM has to be kept by the controller. Links, joint frames, axes, masses and inertias are the
+  authors' CAD values.
+
+  Changes from the original:
+    * mesh paths point to meshes/ next to this file;
+    * j6 (instrument insertion) limits set in metres: [-0.10, 0.10] (were +-0.785, a placeholder),
+      and its axis normalised to a unit vector;
+    * Link6 (the instrument) mesh collision removed: its convex hull would fill the space between
+      the housing and the tip. Replaced by a box on the housing and a cylinder on the shaft, on
+      instrument_axis_link;
+    * added instrument_axis_link (z along the shaft, towards the tip), tool_tip_link and camera_link;
+      the last centimetre of the shaft collides as tool_tip_link, so that a force/torque sensor on the
+      fixed joint tool_tip_fixed feels the contacts at the tip.
+-->
+<robot
+  name="robotrcm">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.031978 9.6663E-08 0.080631"
+        rpy="0 0 0" />
+      <mass
+        value="0.76204" />
+      <inertia
+        ixx="0.0045028"
+        ixy="-1.5266E-09"
+        ixz="-0.00063223"
+        iyy="0.0038111"
+        iyz="9.3725E-10"
+        izz="0.0015555" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="base_link_colour">
+        <color
+          rgba="0.9451 0.9451 0.9451 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="Link1">
+    <inertial>
+      <origin
+        xyz="0.0543968370711238 -0.0149614502635682 -0.0518594922811562"
+        rpy="0 0 0" />
+      <mass
+        value="0.526203943225122" />
+      <inertia
+        ixx="0.00201898925862427"
+        ixy="5.30542440944828E-05"
+        ixz="0.000245864582166184"
+        iyy="0.0020596474783933"
+        iyz="-0.000221278607825394"
+        izz="0.000889519681622222" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link1.STL" />
+      </geometry>
+      <material
+        name="Link1_colour">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j1"
+    type="revolute">
+    <origin
+      xyz="0.048116 0 0.18"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="Link1" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="-0.785"
+      upper="0.785"
+      effort="30"
+      velocity="10" />
+  </joint>
+  <link
+    name="Link2">
+    <inertial>
+      <origin
+        xyz="0.155903889595032 -0.0185369546856527 0.0254949318876525"
+        rpy="0 0 0" />
+      <mass
+        value="0.516229881365552" />
+      <inertia
+        ixx="0.000893749194195446"
+        ixy="-2.37002017986798E-05"
+        ixz="-0.00155811497578313"
+        iyy="0.0109682423252694"
+        iyz="-3.79472826106561E-06"
+        izz="0.0101634856993977" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link2.STL" />
+      </geometry>
+      <material
+        name="Link2_colour">
+        <color
+          rgba="0.945098039215686 0.945098039215686 0.945098039215686 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j2"
+    type="revolute">
+    <origin
+      xyz="0.0675 -0.0727 -0.099441"
+      rpy="0 0 0" />
+    <parent
+      link="Link1" />
+    <child
+      link="Link2" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-0.785"
+      upper="0.785"
+      effort="30"
+      velocity="10" />
+  </joint>
+  <link
+    name="Link3">
+    <inertial>
+      <origin
+        xyz="-0.11014 0.018912 0.067909"
+        rpy="0 0 0" />
+      <mass
+        value="0.44383" />
+      <inertia
+        ixx="0.0014381"
+        ixy="1.3059E-05"
+        ixz="0.0016369"
+        iyy="0.0044375"
+        iyz="-8.0327E-06"
+        izz="0.003084" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link3.STL" />
+      </geometry>
+      <material
+        name="Link3_colour">
+        <color
+          rgba="0.9451 0.9451 0.9451 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j3"
+    type="revolute">
+    <origin
+      xyz="0.35133 0.0017 0.05747"
+      rpy="0 0 0" />
+    <parent
+      link="Link2" />
+    <child
+      link="Link3" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-0.785"
+      upper="0.785"
+      effort="30"
+      velocity="10" />
+  </joint>
+  <link
+    name="Link4">
+    <inertial>
+      <origin
+        xyz="0.107584966237577 0.01530609707738 0.0175990467266355"
+        rpy="0 0 0" />
+      <mass
+        value="0.306124202965196" />
+      <inertia
+        ixx="0.000280878042144891"
+        ixy="-6.92394755756288E-05"
+        ixz="-0.000385061224589275"
+        iyy="0.00275249502028693"
+        iyz="-1.13267404913096E-05"
+        izz="0.00257168785282192" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link4.STL" />
+      </geometry>
+      <material
+        name="Link4_colour">
+        <color
+          rgba="0.945098039215686 0.945098039215686 0.945098039215686 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j4"
+    type="revolute">
+    <origin
+      xyz="-0.20089 0.0505 0.12385"
+      rpy="0 0 0" />
+    <parent
+      link="Link3" />
+    <child
+      link="Link4" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.785"
+      upper="0.785"
+      effort="30"
+      velocity="10" />
+  </joint>
+  <link
+    name="Link5">
+    <inertial>
+      <origin
+        xyz="-0.0200146478719821 0.0177057139688335 0.133259040470697"
+        rpy="0 0 0" />
+      <mass
+        value="0.310424118716014" />
+      <inertia
+        ixx="0.00190126552005404"
+        ixy="-1.18170636873905E-05"
+        ixz="0.000993016757911281"
+        iyy="0.00244459522675595"
+        iyz="4.6149101334156E-06"
+        izz="0.000624990046805462" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link5.STL" />
+      </geometry>
+      <material
+        name="Link5_colour">
+        <color
+          rgba="0.945098039215686 0.945098039215686 0.945098039215686 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j5"
+    type="revolute">
+    <origin
+      xyz="0.25659 0.001 0.041972"
+      rpy="0 0 0" />
+    <parent
+      link="Link4" />
+    <child
+      link="Link5" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-0.785"
+      upper="0.785"
+      effort="30"
+      velocity="10" />
+  </joint>
+  <link
+    name="Link6">
+    <inertial>
+      <origin
+        xyz="-0.12845 2.3165E-06 0.19562"
+        rpy="0 0 0" />
+      <mass
+        value="0.11938" />
+      <inertia
+        ixx="0.00027467"
+        ixy="1.3746E-08"
+        ixz="9.7804E-05"
+        iyy="0.00035435"
+        iyz="1.6289E-08"
+        izz="0.00014591" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="meshes/Link6.STL" />
+      </geometry>
+      <material
+        name="Link6_colour">
+        <color
+          rgba="0.6 0.6 0.6 1" />
+      </material>
+    </visual>
+  </link>
+  <joint
+    name="j6"
+    type="prismatic">
+    <origin
+      xyz="0.14741 0.0195 -0.024725"
+      rpy="0 0 0" />
+    <parent
+      link="Link5" />
+    <child
+      link="Link6" />
+    <axis
+      xyz="0.4747819 0 -0.8801035" />
+    <limit
+      lower="-0.10"
+      upper="0.10"
+      effort="30"
+      velocity="0.5" />
+  </joint>
+
+  <!-- ===================== Added for the lab ===================== -->
+  <!-- Frame on the instrument axis: origin at the Link6 frame, z along the shaft towards the tip
+       (the j6 axis), y the same as Link6 y. -->
+  <link name="instrument_axis_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="1e-8" ixy="0" ixz="0" iyy="1e-8" iyz="0" izz="1e-8" />
+    </inertial>
+    <visual>
+      <!-- tiny invisible visual: without one, the PyBullet window draws the collision shapes -->
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry><sphere radius="0.0005" /></geometry>
+      <material name="invisible"><color rgba="1 1 1 0" /></material>
+    </visual>
+    <collision>
+      <!-- motor housing -->
+      <origin xyz="0.0215 0 -0.2485" rpy="0 0 0" />
+      <geometry><box size="0.075 0.051 0.157" /></geometry>
+    </collision>
+    <collision>
+      <!-- shaft, from the housing to 1 cm before the tip (the last centimetre is tool_tip_link) -->
+      <origin xyz="0 0 0.0435" rpy="0 0 0" />
+      <geometry><cylinder radius="0.0042" length="0.427" /></geometry>
+    </collision>
+  </link>
+
+  <joint name="instrument_axis_fixed" type="fixed">
+    <origin xyz="0 0 0" rpy="0 2.6468764669481026 0" />
+    <parent link="Link6" />
+    <child link="instrument_axis_link" />
+  </joint>
+
+  <link name="tool_tip_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="1e-8" ixy="0" ixz="0" iyy="1e-8" iyz="0" izz="1e-8" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry><sphere radius="0.002" /></geometry>
+      <material name="tip_grey"><color rgba="0.3 0.3 0.3 1" /></material>
+    </visual>
+    <collision>
+      <!-- the last centimetre of the shaft: contacts here are felt by the tip force/torque sensor -->
+      <origin xyz="0 0 -0.005" rpy="0 0 0" />
+      <geometry><cylinder radius="0.0042" length="0.010" /></geometry>
+    </collision>
+    <collision>
+      <!-- rounded end -->
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry><sphere radius="0.0042" /></geometry>
+    </collision>
+  </link>
+
+  <joint name="tool_tip_fixed" type="fixed">
+    <origin xyz="0 0 0.267" rpy="0 0 0" />
+    <parent link="instrument_axis_link" />
+    <child link="tool_tip_link" />
+  </joint>
+
+  <!-- Camera on the instrument housing, 11 cm to the side of the shaft, looking along the shaft and
+       tilted 0.17 rad towards it (so it sees past the trocar port).
+       Camera frame: z = optical axis, x = image right, y = image down. -->
+  <link name="camera_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.01" />
+      <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 -0.008" rpy="0 0 0" />
+      <geometry><box size="0.014 0.014 0.016" /></geometry>
+      <material name="camera_blue"><color rgba="0.15 0.30 0.80 1" /></material>
+    </visual>
+  </link>
+
+  <joint name="camera_mount" type="fixed">
+    <origin xyz="0 0.110 -0.160" rpy="-0.17 0 3.141592653589793" />
+    <parent link="instrument_axis_link" />
+    <child link="camera_link" />
+  </joint>
+</robot>

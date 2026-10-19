@@ -44,7 +44,8 @@ This table will be updated as each week's material is released.
 |---:|---|---|---|
 | 1 | Introduction to medical robotics | Environment setup and introduction to PyBullet | [Week 1](week-1/) |
 | 2 | Robot Kinematics | Compute Forward and Inverse Kinematics | [Week 2](week-2/) |
-
+| 3 | Robot Control | PID Control Gravity Compensation, Computed Torque | [Week 3](week-3/) |
+| 4 | Vision Guided Interventions | Surgical Robotics: Visual Servoing |  [Week 4](week-4/) |
 
 ## Using this repository
 
