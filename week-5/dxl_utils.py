@@ -43,7 +43,7 @@ class Station:
     kp: float
     kd: float
     effort_limit: float
-    pwm_limit: float = 0.12
+    pwm_limit: float = 0.8
     period: float = 0.01
     travel: float = math.radians(75)
 
